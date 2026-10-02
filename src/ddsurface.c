@@ -951,6 +951,15 @@ HRESULT dds_GetDC(IDirectDrawSurfaceImpl* This, HDC FAR* lpHDC)
     if (This->bpp == 8 && data)
         SetDIBColorTable(dc, 0, 256, data);
 
+    /*
+     * Clear any application clipping region left on this reusable HDC.
+     * Without this, a clip selected during one GetDC/ReleaseDC cycle can
+     * leak into the next cycle and incorrectly suppress later GDI drawing.
+     * Do this before SaveDC so ReleaseDC restores the clean baseline.
+     */
+    if (!(This->caps & DDSCAPS_OWNDC))
+        SelectClipRgn(dc, NULL);
+
     if (lpHDC)
         *lpHDC = dc;
 
