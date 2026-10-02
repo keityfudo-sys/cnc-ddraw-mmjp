@@ -227,6 +227,10 @@
             <ResourceType>RCDATA</ResourceType>
             <ResourceId>PngImage_IT</ResourceId>
         </RcItem>
+        <RcItem Include="Resources\JP.PNG">
+            <ResourceType>RCDATA</ResourceType>
+            <ResourceId>PngImage_JP</ResourceId>
+        </RcItem>
         <RcItem Include="Resources\pl.png">
             <ResourceType>RCDATA</ResourceType>
             <ResourceId>PngImage_PL</ResourceId>

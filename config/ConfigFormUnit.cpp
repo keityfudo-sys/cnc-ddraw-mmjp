@@ -49,7 +49,15 @@ void __fastcall TConfigForm::LanguageImgClick(TObject *Sender)
 	auto *ini =
 		new TIniFile(iniPath.Length() ? iniPath : GAME_PATH + "ddraw.ini");
 
-	ini->WriteString("ddraw", "configlang", IsEnglish ? "auto" : "english");
+	/* Japanese Windows: toggle explicitly between Japanese and English.
+       Using "auto" here could leave the language selection dependent on
+       locale handling, so write "japanese" explicitly. */
+	if (SysLocale.PriLangID == LANG_JAPANESE) {
+		ini->WriteString("ddraw", "configlang", IsEnglish ? "japanese" : "english");
+	}
+	else {
+		ini->WriteString("ddraw", "configlang", IsEnglish ? "auto" : "english");
+	}
 	delete ini;
 
 	ShellExecute(
@@ -123,7 +131,89 @@ void TConfigForm::ApplyTranslation(TIniFile *ini)
 	auto lang = LowerCase(ini->ReadString("ddraw", "configlang", "auto"));
 	int priID = SysLocale.PriLangID;
 
-	if (lang == "chinese" || (lang == "auto" && priID == LANG_CHINESE)) {
+	if (lang == "japanese" || (lang == "auto" && priID == LANG_JAPANESE)) {
+		IsEnglish = false;
+		LanguageImg->Visible = true;
+
+		/* -Japanese- */
+
+		ConfigForm->Caption = L"cnc-ddraw 設定";
+		DisplayBtn->Caption = L"画面設定";
+		AdvancedBtn->Caption = L"詳細設定";
+		HotkeyBtn->Caption = L"ホットキー設定";
+		CompatibilityBtn->Caption = L"互換性設定";
+		RestoreDefaultsBtn->Caption = L"既定の設定に戻す";
+		PresentationLbl->Caption = L"表示モード";
+		MaintasLbl->Caption = L"アスペクト比を維持";
+		VsyncLbl->Caption = L"VSyncを有効にする";
+		AdjmouseLbl->Caption = L"マウス感度を調整";
+		DevmodeLbl->Caption = L"カーソルをウィンドウ / 画面内に固定";
+		RendererLbl->Caption = L"レンダラー";
+		BorderLbl->Caption = L"ウィンドウモードで枠を表示";
+		SavesettingsLbl->Caption = L"ウィンドウの位置とサイズを記憶";
+		ShaderLbl->Caption = L"OpenGL シェーダー";
+		MaxfpsLbl->Caption = L"フレームレートを制限";
+		BoxingLbl->Caption = L"整数倍スケーリングを有効にする";
+		ToggleWindowedLbl->Caption = L"ウィンドウモードを切り替え";
+		MaximizeWindowLbl->Caption = L"ウィンドウを最大化";
+		UnlockCursor1Lbl->Caption = L"カーソル固定を解除 1";
+		UnlockCursor2Lbl->Caption = L"カーソル固定を解除 2";
+		ScreenshotLbl->Caption = L"スクリーンショット";
+		MaxgameticksLbl->Caption = L"ゲーム速度を制限";
+		NoactivateappLbl->Caption = L"Alt+Tab の問題を修正";
+		ResolutionsLbl->Caption = L"追加の画面解像度を有効にする";
+		MinfpsLbl->Caption = L"高FPSを強制 / FreeSync・G-Syncのカクつきを修正";
+		SinglecpuLbl->Caption = L"パフォーマンスやサウンドの問題を修正";
+		NonexclusiveLbl->Caption = L"表示されない動画 / UI要素を修正";
+
+		RendererCbx->Items->Clear();
+		RendererCbx->AddItem(L"自動", NULL);
+		RendererCbx->AddItem(L"Direct3D 9", NULL);
+		RendererCbx->AddItem(L"OpenGL", NULL);
+		RendererCbx->AddItem(L"GDI", NULL);
+
+		PresentationCbx->Items->Clear();
+		PresentationCbx->AddItem(L"フルスクリーン", NULL);
+		PresentationCbx->AddItem(L"拡大フルスクリーン", NULL);
+		PresentationCbx->AddItem(L"ボーダーレス", NULL);
+		PresentationCbx->AddItem(L"ウィンドウ", NULL);
+
+		MaxgameticksCbx->Items->Clear();
+		MaxgameticksCbx->AddItem(L"制限なし", NULL);
+		MaxgameticksCbx->AddItem(L"モニターのリフレッシュレートに同期", NULL);
+		MaxgameticksCbx->AddItem(L"60 Hzモニターをエミュレート", NULL);
+		MaxgameticksCbx->AddItem(L"毎秒1000ティック", NULL);
+		MaxgameticksCbx->AddItem(L"毎秒500ティック", NULL);
+		MaxgameticksCbx->AddItem(L"毎秒250ティック", NULL);
+		MaxgameticksCbx->AddItem(L"毎秒125ティック", NULL);
+		MaxgameticksCbx->AddItem(L"毎秒60ティック", NULL);
+		MaxgameticksCbx->AddItem(L"毎秒30ティック", NULL);
+		MaxgameticksCbx->AddItem(L"毎秒25ティック", NULL);
+		MaxgameticksCbx->AddItem(L"毎秒15ティック", NULL);
+
+		System::UnicodeString shaderHint =
+			L"一部のシェーダーは、アップスケーリングが有効な場合のみ動作します。\n\n";
+
+		System::UnicodeString upscaleHint =
+			L"この設定を使用するには、アップスケーリングを有効にする必要があります。\n\n";
+
+		System::UnicodeString enableUpscaleHint =
+			L"アップスケーリングを有効にするには、表示モードを「ボーダーレス」\n"
+			L"または「拡大フルスクリーン」に設定してください。「ウィンドウ」の場合は、\n"
+			L"ウィンドウのサイズを変更するか最大化してください。";
+
+		ShaderLbl->Hint = shaderHint + enableUpscaleHint;
+		ShaderD3DCbx->Hint = shaderHint + enableUpscaleHint;
+		ShaderCbx->Hint = shaderHint + enableUpscaleHint;
+
+		MaintasLbl->Hint = upscaleHint + enableUpscaleHint;
+		MaintasChk->Hint = upscaleHint + enableUpscaleHint;
+		AdjmouseLbl->Hint = upscaleHint + enableUpscaleHint;
+		AdjmouseChk->Hint = upscaleHint + enableUpscaleHint;
+		BoxingLbl->Hint = upscaleHint + enableUpscaleHint;
+		BoxingChk->Hint = upscaleHint + enableUpscaleHint;
+	}
+	else 	if (lang == "chinese" || (lang == "auto" && priID == LANG_CHINESE)) {
 		LanguageImg->Visible = true;
 
 		/* -Chinese Simplified- made by universal963 @ github */
@@ -858,7 +948,13 @@ void TConfigForm::ApplyTranslation(TIniFile *ini)
 		IsEnglish = true;
 
 		try {
-			if (priID == LANG_CHINESE) {
+			if (priID == LANG_JAPANESE) {
+				TPngImage *png = new TPngImage();
+				png->LoadFromResourceName((int)HInstance, "PngImage_JP");
+				LanguageImg->Picture->Graphic = png;
+				LanguageImg->Visible = true;
+			}
+			else if (priID == LANG_CHINESE) {
 				TPngImage *png = new TPngImage();
 				png->LoadFromResourceName((int)HInstance, "PngImage_CN");
 				LanguageImg->Picture->Graphic = png;
