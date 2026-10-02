@@ -15,6 +15,8 @@
 
 また、cnc-ddrawの設定ツールに日本語表示を追加しています。
 
+---
+
 ### 主な変更点
 
 - MixMasterJPで一部のGDI描画が消える問題への修正
@@ -22,17 +24,29 @@
 - 日本語/Englishの切り替え対応
 - 日本国旗リソースの追加
 
+---
+
 ### GDI描画修正について
 
 MixMasterJP では、特定のUI操作後に再利用されるHDCにクリッピング領域が残り、
 後続のGDI描画が正しく表示されない場合があります。
 このForkでは、対象となるHDCのクリッピング領域をクリアする処理を追加しています。
 
+---
+
 ### ダウンロード
 
-一般ユーザー向けの完成版は、このリポジトリの**Releases**から配布予定です。
+一般ユーザー向けの最新版は、**Releases** からダウンロードできます。
 
-> 現在 Release が公開されていない場合は、配布準備中です。
+**通常はこちらをダウンロードしてください：**
+`cnc-ddraw-mmjp-v1.0.zip`
+
+[最新版をダウンロード（Releases）](https://github.com/keityfudo-sys/cnc-ddraw-mmjp/releases/latest)
+
+> ※「Source code (zip)」「Source code (tar.gz)」ではなく、
+> **Assets** にある `cnc-ddraw-mmjp-v1.0.zip` をダウンロードしてください。
+
+---
 
 ### 導入方法
 
@@ -49,6 +63,8 @@ MixMasterJP の `MixMaster.exe` があるフォルダへコピーします。
 
 画面サイズなどを変更したい場合は`cnc-ddraw config.exe`を使用してください。
 
+---
+
 ### 対応バージョン/動作確認環境
 
 本Forkは、以下の MixMasterJPクライアントで動作確認しています。
@@ -61,6 +77,8 @@ MixMasterJP の `MixMaster.exe` があるフォルダへコピーします。
 今後の MixMasterJPのアップデートによって描画処理やクライアント仕様が変更された場合、
 本Forkが正常に動作しなくなる可能性があります。
 
+---
+
 ### 今後の公開・配布について
 
 本Forkは、現在のMixMasterJPにおける表示・ウィンドウ利用上の問題を補うことを目的としています。
@@ -70,6 +88,8 @@ MixMasterJP の `MixMaster.exe` があるフォルダへコピーします。
 本Forkの更新・配布を終了、またはリポジトリをアーカイブする可能性があります。
 
 公式機能で同等の環境が実現できる場合は、公式クライアントの機能を優先してください。
+
+---
 
 ### ソースコード
 
@@ -86,6 +106,8 @@ MixMasterJP向けの変更はGitのコミット履歴から確認できます。
 - `config/cnc-ddraw config.cbproj` — 日本国旗リソースの登録
 - `config/cnc-ddraw config_resources.rc` — 日本国旗リソースの追加
 - `config/Resources/JP.PNG` — 日本国旗画像
+
+---
 
 ### 注意事項
 
