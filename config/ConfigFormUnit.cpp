@@ -154,7 +154,7 @@ void TConfigForm::ApplyTranslation(TIniFile *ini)
 		ShaderLbl->Caption = L"OpenGL シェーダー";
 		MaxfpsLbl->Caption = L"フレームレートを制限";
 		BoxingLbl->Caption = L"整数倍スケーリングを有効にする";
-		ToggleWindowedLbl->Caption = L"ウィンドウモードを切り替え";
+		ToggleWindowedLbl->Caption = L"ウィンドウ / フルスクリーンを切り替え";
 		MaximizeWindowLbl->Caption = L"ウィンドウを最大化";
 		UnlockCursor1Lbl->Caption = L"カーソル固定を解除 1";
 		UnlockCursor2Lbl->Caption = L"カーソル固定を解除 2";
@@ -174,7 +174,7 @@ void TConfigForm::ApplyTranslation(TIniFile *ini)
 
 		PresentationCbx->Items->Clear();
 		PresentationCbx->AddItem(L"フルスクリーン", NULL);
-		PresentationCbx->AddItem(L"拡大フルスクリーン", NULL);
+		PresentationCbx->AddItem(L"フルスクリーン（アップスケール）", NULL);
 		PresentationCbx->AddItem(L"ボーダーレス", NULL);
 		PresentationCbx->AddItem(L"ウィンドウ", NULL);
 
@@ -199,7 +199,7 @@ void TConfigForm::ApplyTranslation(TIniFile *ini)
 
 		System::UnicodeString enableUpscaleHint =
 			L"アップスケーリングを有効にするには、表示モードを「ボーダーレス」\n"
-			L"または「拡大フルスクリーン」に設定してください。「ウィンドウ」の場合は、\n"
+			L"または「フルスクリーン（アップスケール）」に設定してください。「ウィンドウ」の場合は、\n"
 			L"ウィンドウのサイズを変更するか最大化してください。";
 
 		ShaderLbl->Hint = shaderHint + enableUpscaleHint;
