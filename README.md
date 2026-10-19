@@ -23,6 +23,7 @@
 - cnc-ddraw設定ツールの日本語表示対応
 - 日本語/Englishの切り替え対応
 - 日本国旗リソースの追加
+- 複数起動時の非アクティブ側カクつき対策を初期設定に反映
 
 ---
 
@@ -62,6 +63,22 @@ MixMasterJP の `MixMaster.exe` があるフォルダへコピーします。
 ※ウィンドウ表示についてはMixMaster側ではなく、cnc-ddraw側で行います。
 
 画面サイズなどを変更したい場合は`cnc-ddraw config.exe`を使用してください。
+
+### 複数起動時のカクつき対策
+
+MixMasterJPを複数起動した際、非アクティブ側のウィンドウだけ動作がカクつく場合があります。
+
+本Forkでは、MixMasterJP向けの初期設定として以下を有効化しています。
+
+- `noactivateapp=true`
+- `singlecpu=false`
+
+`cnc-ddraw config.exe` 上では、次の項目に相当します。
+
+- 「Alt+Tab の問題を修正」：ON
+- 「パフォーマンスやサウンドの問題を修正」：ON
+
+この設定により、複数起動時の非アクティブウィンドウの描画・操作が滑らかになることをMixMasterJP環境で確認しています。
 
 ---
 
@@ -150,12 +167,23 @@ Japanese language support to the cnc-ddraw configuration tool.
 - Japanese translation for the cnc-ddraw configuration tool
 - Japanese / English language switching
 - Japanese flag resource
+- Default settings adjusted to reduce stutter in inactive windows during multi-instance use
 
 ### Downloads
 
 Prebuilt packages for users will be available from **Releases**.
 
 If no release is currently available, the package is still being prepared.
+
+### Multi-instance stutter mitigation
+
+When multiple MixMaster JP clients are running, inactive windows may stutter.
+This fork enables the following defaults for MixMaster JP:
+
+- `noactivateapp=true`
+- `singlecpu=false`
+
+In `cnc-ddraw config.exe`, these correspond to enabling the Alt+Tab fix and the performance/sound fix.
 
 ### Compatibility
 
